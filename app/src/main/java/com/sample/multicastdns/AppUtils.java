@@ -10,11 +10,10 @@ import android.widget.Toast;
  */
 public class AppUtils {
     /**
-     *
      * @param mContext
      * @return
      */
-    public static NsdManager initializeNSDManger(Context mContext){
+    public static NsdManager initializeNSDManger(Context mContext) {
         return (NsdManager) mContext.getSystemService(Context.NSD_SERVICE);
     }
 

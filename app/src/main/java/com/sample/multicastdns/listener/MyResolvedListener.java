@@ -10,9 +10,9 @@ import com.sample.multicastdns.model.ScannedData;
  * Created by AKASH on 26/10/19.
  */
 public class MyResolvedListener implements NsdManager.ResolveListener {
-   private MyResolveListener myResolveListener=null;
+    private MyResolveListener myResolveListener = null;
 
-    public interface MyResolveListener{
+    public interface MyResolveListener {
         void onDeviceFound(ScannedData data);
     }
 

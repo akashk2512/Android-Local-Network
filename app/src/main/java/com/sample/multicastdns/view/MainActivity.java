@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext=MainActivity.this;
+        mContext = MainActivity.this;
 
         mNsdManager = AppUtils.initializeNSDManger(mContext);
 
         btn_scan = findViewById(R.id.btn_scan);
-        btn_publish=findViewById(R.id.btn_publish);
+        btn_publish = findViewById(R.id.btn_publish);
         recyclerView = findViewById(R.id.recycler_view);
 
         btn_publish.setOnClickListener(this);
@@ -62,15 +62,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onPause() {
-        if (mNsdManager!=null){
-            if (isPublishedClicked){
+        if (mNsdManager != null) {
+            if (isPublishedClicked) {
                 unRegisterService();
             }
-            if (isScanClicked){
+            if (isScanClicked) {
                 stopDisCoverService();
             }
         }
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             stopTimer();
         }
         super.onPause();
@@ -79,11 +79,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (mNsdManager != null){
-            if (isPublishedClicked){
+        if (mNsdManager != null) {
+            if (isPublishedClicked) {
                 registerService(AppConstant.PORT);
             }
-            if (isScanClicked){
+            if (isScanClicked) {
                 disCoverService();
             }
         }
@@ -97,39 +97,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Discover service
      */
-    public void disCoverService(){
-        if (!isDisCoveryRunning){
-            isDisCoveryRunning=true;
+    public void disCoverService() {
+        if (!isDisCoveryRunning) {
+            isDisCoveryRunning = true;
             startTime();
             scanDataAdapter.refreshAdapter();
             mNsdManager.discoverServices(AppConstant.SERVICE_TYPE,
-                    NsdManager.PROTOCOL_DNS_SD,disCoveryListener);
+                    NsdManager.PROTOCOL_DNS_SD, disCoveryListener);
         }
     }
 
     /**
      * Stop discoverService
      */
-    public void stopDisCoverService(){
-        if (isDisCoveryRunning){
-            isDisCoveryRunning=false;
+    public void stopDisCoverService() {
+        if (isDisCoveryRunning) {
+            isDisCoveryRunning = false;
             mNsdManager.stopServiceDiscovery(disCoveryListener);
         }
     }
 
 
     /**
-     *  Register service
+     * Register service
+     *
      * @param port
      */
-    public void registerService(int port){
+    public void registerService(int port) {
         NsdServiceInfo serviceInfo = new NsdServiceInfo();
         serviceInfo.setServiceName(AppConstant.SERVICE_NAME);
         serviceInfo.setServiceType(AppConstant.SERVICE_TYPE);
         serviceInfo.setPort(port);
-        if (!isServicePublished){
+        if (!isServicePublished) {
             isServicePublished = true;
-            mNsdManager.registerService(serviceInfo,NsdManager.PROTOCOL_DNS_SD,
+            mNsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD,
                     mRegistrationListener);
         }
     }
@@ -137,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Unregister service
      */
-    public void unRegisterService(){
-        if (isServicePublished){
+    public void unRegisterService() {
+        if (isServicePublished) {
             isServicePublished = false;
             mNsdManager.unregisterService(mRegistrationListener);
         }
@@ -147,15 +148,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_publish:
-                isPublishedClicked =true;
+                isPublishedClicked = true;
                 isScanClicked = false;
                 registerService(AppConstant.PORT);
                 break;
             case R.id.btn_scan:
-                if (btn_scan.getText().toString().equalsIgnoreCase("SCAN")){
-                    isPublishedClicked=false;
+                if (btn_scan.getText().toString().equalsIgnoreCase("SCAN")) {
+                    isPublishedClicked = false;
                     isScanClicked = true;
                     disCoverService();
                 }
@@ -165,18 +166,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDeviceRegistration(String message) {
-        AppUtils.showToast(mContext,message);
+        AppUtils.showToast(mContext, message);
     }
 
 
     @Override
     public void onSeriveFound(NsdServiceInfo serviceInfo) {
-        mNsdManager.resolveService(serviceInfo,new MyResolvedListener(this));
+        mNsdManager.resolveService(serviceInfo, new MyResolvedListener(this));
     }
 
     @Override
     public void discoveryStatus(String message) {
-        AppUtils.showToast(mContext,message);
+        AppUtils.showToast(mContext, message);
 
     }
 
@@ -191,12 +192,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    CountDownTimer countDownTimer=null;
-    void startTime(){
-       countDownTimer= new CountDownTimer(10000, 1000) { // count down for 10seconds
+    CountDownTimer countDownTimer = null;
+
+    void startTime() {
+        countDownTimer = new CountDownTimer(10000, 1000) { // count down for 10seconds
 
             public void onTick(long millisUntilFinished) {
-                btn_scan.setText(""+millisUntilFinished / 1000);
+                btn_scan.setText("" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -206,7 +208,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }.start();
 
     }
-    void stopTimer(){
+
+    void stopTimer() {
         btn_scan.setText("SCAN");
         countDownTimer.cancel();
     }

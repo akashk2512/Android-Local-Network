@@ -7,14 +7,15 @@ import android.net.nsd.NsdServiceInfo;
  * Created by AKASH on 26/10/19.
  */
 public class MyDisCoveryListener implements NsdManager.DiscoveryListener {
-    private NetworkDiscovery discovery=null;
+    private NetworkDiscovery discovery = null;
 
     public MyDisCoveryListener(NetworkDiscovery discovery) {
         this.discovery = discovery;
     }
 
-    public interface NetworkDiscovery{
+    public interface NetworkDiscovery {
         void onSeriveFound(NsdServiceInfo serviceInfo);
+
         void discoveryStatus(String message);
     }
 

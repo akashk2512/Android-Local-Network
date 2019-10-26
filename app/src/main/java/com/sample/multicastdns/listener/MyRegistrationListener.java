@@ -9,8 +9,9 @@ import android.util.Log;
  */
 public class MyRegistrationListener implements NsdManager.RegistrationListener {
 
-    private MyNewtorkRegistration registration=null;
-    public interface MyNewtorkRegistration{
+    private MyNewtorkRegistration registration = null;
+
+    public interface MyNewtorkRegistration {
         void onDeviceRegistration(String message);
     }
 
