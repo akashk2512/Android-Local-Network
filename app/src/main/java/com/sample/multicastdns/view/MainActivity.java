@@ -63,12 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         if (mNsdManager != null) {
-            if (isPublishedClicked) {
+//            if (isPublishedClicked) {
                 unRegisterService();
-            }
-            if (isScanClicked) {
+//            }
+//            if (isScanClicked) {
                 stopDisCoverService();
-            }
+//            }
         }
         if (countDownTimer != null) {
             stopTimer();
